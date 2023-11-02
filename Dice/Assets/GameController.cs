@@ -78,8 +78,6 @@ public class GameController : MonoBehaviour
 
    private IEnumerator OnRollDice()
    {
-      Debug.LogError(MethodBase.GetCurrentMethod());
-      
       var currentDice1Value = 0;
       var currentDice2Value = 0;
       
@@ -121,6 +119,12 @@ public class GameController : MonoBehaviour
 
    private void MoveToNextWaypoint()
    {
+      if (_characterWaypointIndexArray[_currentCharacterIndex] >= wayPointTransformArray.Length)
+      {
+         _characterWaypointIndexArray[_currentCharacterIndex] = 0;
+         _currentTargetWaypointIndex = 1;
+      }
+         
       StartCoroutine(OnMoveToNextWaypoint());
    }
 
@@ -133,7 +137,7 @@ public class GameController : MonoBehaviour
 
       var moveDuration = Vector3.Distance(startPosition, endPosition)/ speed;
       
-      Debug.LogError(Vector3.Distance(startPosition, endPosition) + " " + moveDuration);
+      Debug.LogError("Current Distance : " + Vector3.Distance(startPosition, endPosition) + " Current Duration : " + moveDuration);
       
       yield return new WaitForSeconds(moveDuration);
 
